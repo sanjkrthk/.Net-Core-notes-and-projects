@@ -1,0 +1,31 @@
+Steps for connecting App with DB :
+
+1. Added a newFolder "Model"
+2. In Model we created a model/class for student and added properties.
+3. In Model we added a class "ApiDbContext".
+4. In ApiDbContext, inherits DbContext and created parameterised constructor.
+public class ApiDbContext : DbContext
+    {
+
+        public ApiDbContext(DbContextOptions <ApiDbContext> options) : base(options)
+        {
+
+        }
+
+        public DbSet<Student> studentDto { get; set; }
+    }
+5. Add connection string in AppSetting.json
+"ConnectionStrings": {
+    "MyDbConnection": "Server=*******;Initial Catalog=TestStuData;User Id=sa ;Password=********"
+  },
+6. In startUp class under configureService method we have to register the connection string. install (Microsoft.EntityFrameworkCore.SqlServer) package from nuget.
+
+services.AddDbContext<ApiDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
+
+7.a.Add package Microsoft.EntityFrameworkCore.Tools from nuget.
+  b.Open Tools->NugetPackageManager->PackageManagerConsole
+  c.Now write : add-migration FirstMigration and press enter
+  d.Now write : update-database and press enter 
+  
+  This will create a database name given in the connection string and the tables according we have given name in ApiDbContext : DbSet <>
+

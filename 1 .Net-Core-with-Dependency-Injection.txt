@@ -1,0 +1,28 @@
+Life-Time of Registered service :
+
+Singleton : Its object will be created once the application runs. 
+Transient : Its object will be created with every request.
+Scoped    : Its object will be created for every diff scope.
+
+DI : We can achieve DI by these 3 ways: 
+1. Constructor Injection 2. Method Injection  3. Property Injection
+
+Steps : 
+
+1. Firstly we have to create 2 folders : Interface and Service
+2. Then We'll add an Interface in the interface folder.
+3. Then we'll create a class for implemention of interface in Service folder.
+4. Then we'll inherit the interface in the class and implement the methods.
+
+5. We have to register our service within ConfigureService method in Startup class.
+Syntax :  services.AddSingleton<IStudent, Student>();
+
+6. We have to create a readonly property in our class/controller where we want to use this interface.
+	Syntax : private readonly IStudent student;
+
+7. Now we'll inject our service through constructor .
+	Syntax : 
+		public StudentController(IStudent _student)
+        {
+            student = _student;
+        }
